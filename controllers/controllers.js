@@ -1,4 +1,4 @@
-const { selectAllTopics } = require("../models/topics.models")
+const { selectAllTopics, getJSONmodel } = require('../models/models')
 
 exports.getAllTopics = (req, res, next) => {
     selectAllTopics()
@@ -9,3 +9,9 @@ exports.getAllTopics = (req, res, next) => {
         next(err)
       })
 }
+
+exports.getJSONctrl = (req, res) => {
+    const JSONobj = getJSONmodel()
+    res.status(200).send( JSONobj )
+}
+
