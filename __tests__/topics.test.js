@@ -43,17 +43,13 @@ describe("GET /api/topics tests", () => {
             return request(app)
             .get("/api/topics")
             .then(( { body }) => {
-                let output = true;
+                expect(body.topics).toHaveLength(3)
                 body.topics.forEach((topic) => {
-                    if (topic.hasOwnProperty('slug') === false) {
-                        output = false
-                    }
-                    else if (topic.hasOwnProperty('description') === false) {
-                        output = false
-                    }
+                    expect(topic).toMatchObject({
+                        slug: expect.any(String),
+                        description: expect.any(String)
+                    })
                 })
-                const expected = true
-                expect(output).toBe(expected);
             });
         });
     });

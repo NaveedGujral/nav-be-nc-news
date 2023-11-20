@@ -1,8 +1,7 @@
-const { selectTopic } = require("../models/topics.models")
+const { selectAllTopics } = require("../models/topics.models")
 
 exports.getAllTopics = (req, res, next) => {
-    const sqlStr = `SELECT * FROM topics;`
-    selectTopic(sqlStr)
+    selectAllTopics()
     .then((topics) => {
         res.status(200).send({ topics })
     })
