@@ -11,6 +11,7 @@ exports.getAllTopics = (req, res, next) => {
 }
 
 exports.getAllCommentsByArtId = (req, res, next) => {
+    const artId = req.params.article_id
     selectAllCommentsByArtId(artId)
     .then((comments) => {
         res.status(200).send({ comments })

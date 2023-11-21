@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express()
-const { getAllTopics, getJSONctrl } = require('./controllers/controllers.js');
+const { getAllTopics, getJSONctrl, getAllCommentsByArtId } = require('./controllers/controllers.js');
 
 app.get("/api/topics", getAllTopics)
 
@@ -26,7 +26,7 @@ Consider what errors could occur with this endpoint, and make sure to test for t
 Remember to add a description of this endpoint to your /api endpoint.
 */
 
-app.get("")
+app.get("/api/articles/:article_id/comments", getAllCommentsByArtId)
 
 
 app.get("/api", getJSONctrl)
