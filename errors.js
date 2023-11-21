@@ -6,7 +6,6 @@ exports.customErrors = (err, req, res, next) => {
   };
 
 exports.psqlErrors = (err, req, res, next) => {
-    console.log("PSQL error code block -> ",err)
     console.log("PSQL error code: ",err.code)
 
     if (err.code === '23502') {
