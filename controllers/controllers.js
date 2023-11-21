@@ -14,14 +14,8 @@ exports.getArticleById = (req, res, next) => {
     const artId = req.params.article_id
     selectArticleById(artId)
     .then((article) => {
-        
-        if(article[0] === undefined) {
-            res.status(404).send({ msg: "article does not exist" })
-        }
-
         res.status(200).send({ article: article[0] })
     })
-
     .catch((err) => {
         next(err)
         })       

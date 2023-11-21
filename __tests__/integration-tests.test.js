@@ -66,10 +66,18 @@ describe('GET /api/articles/:article_id tests', () => {
     });
     test('should respond with a error status of 404 when passed a non-existent id', () => {
         return request(app)
-        .get("/api/articles/14")
+        .get("/api/articles/140")
         .expect(404)
         .then(({ body }) => {
             expect(body.msg).toBe("article does not exist")
+        })
+    });
+    test('should respond with a error status of 404 when passed an id of a invalid data type', () => {
+        return request(app)
+        .get("/api/articles/not-an-id")
+        .expect(400)
+        .then(({ body }) => {
+            expect(body.msg).toBe("Bad Request")
         })
     });
 });
