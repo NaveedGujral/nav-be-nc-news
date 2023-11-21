@@ -8,7 +8,21 @@ exports.selectAllTopics = () => {
     })
 }
 
-
+exports.selectArticleById = (artId) => {
+    return db.query(`SELECT * FROM articles WHERE article_id = $1`, [artId])
+    .then(({ rows }) => {
+        const article = rows[0]
+        if (article === undefined) {
+            return Promise.reject({
+                status: 404,
+                msg: `article does not exist`
+            })
+        }
+        return article
+    })
+}
+      
+      
 exports.selectAllArticles = () => {
     
     return db.query(`SELECT 
@@ -21,11 +35,9 @@ exports.selectAllArticles = () => {
 
     .then(({ rows }) => {
         const articles = rows
-
         articles.forEach((article) => {
             article.comment_count = +article.comment_count
         })
-
         return articles
     })
 }

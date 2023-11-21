@@ -1,20 +1,24 @@
+exports.customErrors = (err, req, res, next) => {
+    if (err.status) {
+      res.status(err.status).send({ msg: err.msg });
+    }
+    else next(err) 
+  };
+
 exports.psqlErrors = (err, req, res, next) => {
+    console.log("PSQL error code block -> ",err)
     console.log("PSQL error code: ",err.code)
 
     if (err.code === '23502') {
-      res.status(400).send({ msg: 'Bad request' });
+      res.status(400).send({ msg: 'Bad Request' });
     } 
+
     if (err.code === '22P02') {
-      res.status(400).send({ msg: 'Bad request' });
+      res.status(400).send({ msg: 'Bad Request' });
     } 
+    else next(err)
   };
 
-exports.customErrors = (err, req, res, next) => {
-    console.log("error status: ",err.status)
-    if (err.status) {
-      res.status(err.status).send({ msg: err.msg });
-    } 
-  };
 
 exports.serverErrors = (err, req, res, next) => {
     console.log("server error: ", err)
