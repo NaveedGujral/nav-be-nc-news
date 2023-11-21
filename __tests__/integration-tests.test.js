@@ -33,6 +33,30 @@ describe("GET /api/topics tests", () => {
     })
 });
 
+describe("GET /api/articles tests", () => {
+        test('responds with array of objects with the correct keys. The array has the correct length and the accompanying code should be status 200', () => {
+            return request(app)
+            .get("/api/articles")
+            .expect(200)
+            .then(( { body }) => {
+                expect(body.articles).toHaveLength(13)
+                expect(body.articles).toBeSortedBy("created_at", { descending: true })
+                body.articles.forEach((article) => {
+                    expect(article).toMatchObject({
+                        author: expect.any(String),
+                        title: expect.any(String),
+                        article_id: expect.any(Number),
+                        topic: expect.any(String),
+                        created_at: expect.any(String),
+                        votes: expect.any(Number),
+                        article_img_url: expect.any(String),
+                        comment_count: expect.any(Number)
+                })               
+            })
+        })
+    })
+});
+
 describe('GET /api tests', () => {
         test('should return an parsed JSON object with the correct information', () => {
             return request(app)
