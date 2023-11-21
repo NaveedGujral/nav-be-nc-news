@@ -11,8 +11,8 @@ exports.selectAllTopics = () => {
 exports.selectArticleById = (artId) => {
     return db.query(`SELECT * FROM articles WHERE article_id = $1`, [artId])
     .then(({ rows }) => {
-        const article = rows
-        if (article.length === 0) {
+        const article = rows[0]
+        if (article === undefined) {
             return Promise.reject({
                 status: 404,
                 msg: `article does not exist`
