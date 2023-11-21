@@ -10,11 +10,11 @@ exports.psqlErrors = (err, req, res, next) => {
     console.log("PSQL error code: ",err.code)
 
     if (err.code === '23502') {
-      res.status(400).send({ msg: 'Bad request' });
+      res.status(400).send({ msg: 'Bad Request' });
     } 
 
     if (err.code === '22P02') {
-      res.status(400).send({ msg: 'Bad request' });
+      res.status(400).send({ msg: 'Bad Request' });
     } 
     else next(err)
   };
