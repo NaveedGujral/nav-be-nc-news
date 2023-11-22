@@ -60,7 +60,7 @@ describe("GET /api/articles/:article_id/comments tests", () => {
             expect(body.msg).toBe("this article has no comments")
         })
     });
-    test.skip('should respond with a error status of 400 when passed an id of a invalid data type', () => {
+    test('should respond with a error status of 400 when passed an id of a invalid data type', () => {
         return request(app)
         .get("/api/articles/not-an-id/comments")
         .expect(400)
