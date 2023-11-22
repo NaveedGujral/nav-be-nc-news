@@ -39,7 +39,6 @@ describe("GET /api/articles/:article_id/comments tests", () => {
         .get("/api/articles/3/comments")
         .expect(200)
         .then(( { body }) => {
-            console.log(body.comments)
             expect(body.comments).toHaveLength(2)
             expect(body.comments).toBeSortedBy("created_at", { descending: true })
             body.comments.forEach((comment) => {
@@ -54,12 +53,12 @@ describe("GET /api/articles/:article_id/comments tests", () => {
             })
         })
     })
-    test('should respond with a 404 when given an invalid article_id', () => {
+    test('should respond with a 200 and an empty array when given an valid article_id that doesn\'t exist', () => {
         return request(app)
         .get("/api/articles/999/comments")
-        .expect(404)
+        .expect(200)
         .then(({ body }) => {
-            expect(body.msg).toBe("this article has no comments")
+            expect(body.comments).toHaveLength(0)
         })
     });
     test('should respond with a error status of 400 when passed an id of a invalid data type', () => {
