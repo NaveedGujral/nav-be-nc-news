@@ -28,9 +28,33 @@
       ]
     }
   },
+  "GET /api/articles/:article_id/comments": {
+    "description": "responds with an array of comments that match the article id",
+    "queries": [],
+    "exampleResponse": {
+      "comments": [
+        {
+        "comment_id": 11,
+        "votes": 0,
+        "created_at": "2020-09-19T23:10:00.000Z",
+        "author": "icellusedkars",
+        "body": "Ambidextrous marsupial",
+        "article_id": 3
+        },
+        {
+          "comment_id": 10,
+          "votes": 0,
+          "created_at": "2020-06-20T07:24:00.000Z",
+          "author": "icellusedkars",
+          "body": "git push origin master",
+          "article_id": 3
+        }
+      ]
+    }
+  },
   "GET /api/articles/:article_id": {
     "description":"responds with an article object based on the id given",
-    "queries": ["article_id"],
+    "queries": [],
     "exampleResponse": {
       "article": {
           "author": "butter_bridge",
