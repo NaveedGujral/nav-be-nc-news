@@ -6,8 +6,6 @@ exports.customErrors = (err, req, res, next) => {
 };
 
 exports.psqlErrors = (err, req, res, next) => {
-  console.log("PSQL error code: ",err.code)
-
   if (err.code === '23502') {
     res.status(400).send({ msg: 'Bad Request' });
   } 
@@ -20,7 +18,6 @@ exports.psqlErrors = (err, req, res, next) => {
 
 
 exports.serverErrors = (err, req, res, next) => {
-  console.log("server error: ", err)
   if (err.status) {
     res.status(500).send({ msg: "internal server error" });
   } 
