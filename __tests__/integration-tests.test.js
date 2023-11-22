@@ -19,9 +19,6 @@ describe("GET /api/topics tests", () => {
             .get("/api/topics")
             .expect(200)
             .then(( { body }) => {
-                const output = Array.isArray(body.topics)
-                const expected = true
-                expect(output).toEqual(expected)
                 expect(body.topics).toHaveLength(3)
                 body.topics.forEach((topic) => {
                     expect(topic).toMatchObject({
