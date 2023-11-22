@@ -15,12 +15,14 @@
     "exampleResponse": {
       "articles": [
         {
-          "title": "Seafood substitutions are increasing",
-          "topic": "cooking",
           "author": "weegembump",
-          "body": "Text from the article..",
+          "title": "Seafood substitutions are increasing",
+          "article_id": "1",
+          "topic": "cooking",
           "created_at": "2018-05-30T15:59:13.341Z",
           "votes": 0,
+          "article_img_url":
+          "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
           "comment_count": 6
         }
       ]
@@ -48,6 +50,23 @@
           "article_id": 3
         }
       ]
+    }
+  },
+  "GET /api/articles/:article_id": {
+    "description":"responds with an article object based on the id given",
+    "queries": [],
+    "exampleResponse": {
+      "article": {
+          "author": "butter_bridge",
+          "title": "Living in the shadow of a great man",
+          "article_id": "1",
+          "body": "I find this existence challenging",
+          "topic": "mitch",
+          "created_at": 1594329060000,
+          "votes": 100,
+          "article_img_url":
+            "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700"
+      }
     }
   }
 }
