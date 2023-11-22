@@ -53,6 +53,14 @@ describe("GET /api/articles/:article_id/comments tests", () => {
             })
         })
     })
+    test('should respond with a 200 and an empty array when given an  article_id that exists but has no comments', () => {
+        return request(app)
+        .get("/api/articles/2/comments")
+        .expect(200)
+        .then(({ body }) => {
+            expect(body.comments).toHaveLength(0)
+        })
+    });
     test('should respond with a 200 and an empty array when given an valid article_id that doesn\'t exist', () => {
         return request(app)
         .get("/api/articles/999/comments")
