@@ -52,15 +52,15 @@ describe("GET /api/articles/:article_id/comments tests", () => {
             })
         })
     })
-    test.skip('should respond with a 404 when given an invalid article_id', () => {
+    test('should respond with a 404 when given an invalid article_id', () => {
         return request(app)
         .get("/api/articles/999/comments")
         .expect(404)
         .then(({ body }) => {
-            expect(body.msg).toBe("article does not exist")
+            expect(body.msg).toBe("this article has no comments")
         })
     });
-    test.skip('should respond with a error status of 404 when passed an id of a invalid data type', () => {
+    test.skip('should respond with a error status of 400 when passed an id of a invalid data type', () => {
         return request(app)
         .get("/api/articles/not-an-id/comments")
         .expect(400)
