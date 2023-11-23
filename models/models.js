@@ -56,12 +56,14 @@ exports.updateArticleVotes = (newVote, artId) => {
     return db.query(sqlStr, valArr)
     .then(({ rows }) => {
         const article = rows[0]
+        
         if (article === undefined) {
             return Promise.reject({
                 status: 404,
                 msg: `article does not exist`
             })
         }
+
         return article
     })
 }
@@ -69,18 +71,3 @@ exports.updateArticleVotes = (newVote, artId) => {
 exports.getJSONmodel = () => {
     return endpointJSONfile
 }
-
-// exports.insertComment = (reqBody, artId) => {
-//     const { username, body } = reqBody
-
-//     let sqlStr = `INSERT INTO comments ( author, body, article_id ) VALUES ( $1, $2, $3 ) RETURNING *`
-
-//     const valArray = [ username, body, artId ]
-
-//     return db.query(sqlStr, valArray)
-//     .then((table) => {
-//         const comment = table.rows[0]
-//         // console.log(comment)
-//         return comment
-//     })
-// }
