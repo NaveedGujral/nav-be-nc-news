@@ -50,7 +50,14 @@ exports.selectAllCommentsByArtId = (artId) => {
 }
 
 exports.updateArticleVotes = (newVote, artId) => {
-    let sqlStr = `UPDATE articles SET votes = votes + $1 WHERE article_id = $2 RETURNING *`
+    const sqlStr = `UPDATE articles SET votes = votes + $1 WHERE article_id = $2 RETURNING *`
+    const valArr = [ newVote, artId ]
+
+    return db.query(sqlStr, valArr)
+    .then((table) => {
+        const article = table.rows[0]
+        console.log("article ->", article)
+    })
 }
 
 exports.getJSONmodel = () => {

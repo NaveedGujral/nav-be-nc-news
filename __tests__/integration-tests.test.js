@@ -138,6 +138,16 @@ describe('GET /api/articles/:article_id tests', () => {
     });
 });
 
+describe('PATCH /api/articles/:article_id', () => {
+    test('should respond with an object with the correct information', () => {
+        const reqObj = {
+             inc_votes : 1 
+        }
+
+        return
+    });
+});
+
 describe('GET /api tests', () => {
         test('should return an parsed JSON object with the correct information', () => {
             return request(app)
