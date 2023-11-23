@@ -237,7 +237,7 @@ describe('POST /api/articles/:article_id/comments test', () => {
     });
 });
 
-describe.only('DELETE /api/comments/:comment_id tests', () => {
+describe('DELETE /api/comments/:comment_id tests', () => {
     test('should respond with only 204 with valid comment_id. Comments table should have the relevant entry removed', () => {
         request(app)
         .get("/api/articles/9/comments")
