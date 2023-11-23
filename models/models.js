@@ -21,8 +21,7 @@ exports.selectArticleById = (artId) => {
         return article
     })
 }
-      
-      
+           
 exports.selectAllArticles = () => {
     
     return db.query(`SELECT 
@@ -48,6 +47,10 @@ exports.selectAllCommentsByArtId = (artId) => {
         const commentArray = rows
         return commentArray
     })
+}
+
+exports.updateArticleVotes = (artId, voteInc) => {
+
 }
 
 exports.getJSONmodel = () => {
