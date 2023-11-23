@@ -138,6 +138,105 @@ describe('GET /api/articles/:article_id tests', () => {
     });
 });
 
+describe('POST /api/articles/:article_id/comments test', () => {
+    test('should respond with the comment posted with an updated comments table when given a valid article id', () => {
+        const newComment =  {
+            username:"lurker",
+            body:"I'm allergic to chicken"
+          }
+
+        return request(app)
+        .post("/api/articles/1/comments")
+        .send(newComment)
+        .expect(201)
+        .then((response) => {
+            expect(response.body.comment).toMatchObject(
+                {
+                    body: expect.any(String),
+                    votes: expect.any(Number),
+                    author: expect.any(String),
+                    article_id: 1,
+                    created_at: expect.any(String)
+                }
+            )
+        })
+    });
+    test('should respond with a 201 when given a request body with additional properties', () => {
+        const newComment =  {
+            username:"lurker",
+            body:"I'm allergic to chicken",
+            location: "Manchester",
+            job: "bin man"
+          } 
+        return request(app)
+        .post("/api/articles/1/comments")
+        .send(newComment)
+        .expect(201)
+        .then((response) => {
+            expect(response.body.comment).toMatchObject(
+                {
+                    body: expect.any(String),
+                    votes: expect.any(Number),
+                    author: expect.any(String),
+                    article_id: 1,
+                    created_at: expect.any(String)
+                }
+            )
+        })
+    });
+    test('should respond a 404 and when given a username that does not exist ', () => {
+        const newComment =  {
+            username:"iLoveChicken",
+            body:"I'm allergic to chicken"
+          }
+        return request(app)
+        .post("/api/articles/1/comments")
+        .send(newComment)
+        .expect(404)
+        .then(({ body }) => {
+            expect(body.msg).toBe("user does not exist")
+        })
+    });
+    test('should respond with a 404 when given a valid article id that does not exist', () => {
+        const newComment =  {
+            username:"lurker",
+            body:"I'm allergic to chicken"
+          } 
+        return request(app)
+        .post("/api/articles/999/comments")
+        .send(newComment)
+        .expect(404)
+        .then(({ body }) => {
+            expect(body.msg).toBe("article does not exist")
+        })
+    });
+    test('should respond with a 400 when given a invalid article id', () => {
+        const newComment =  {
+            username:"lurker",
+            body:"I'm allergic to chicken"
+          } 
+        return request(app)
+        .post("/api/articles/not-an-id/comments")
+        .send(newComment)
+        .expect(400)
+        .then(({ body }) => {
+            expect(body.msg).toBe("Bad Request")
+        })
+    });
+    test('should respond with a 400 when given a request body with a missing "body" property', () => {
+        const newComment =  {
+            username:"lurker"
+          } 
+        return request(app)
+        .post("/api/articles/1/comments")
+        .send(newComment)
+        .expect(400)
+        .then(({ body }) => {
+            expect(body.msg).toBe("Bad Request")
+        })
+    });
+});
+
 describe('GET /api tests', () => {
         test('should return an parsed JSON object with the correct information', () => {
             return request(app)
