@@ -21,8 +21,7 @@ exports.selectArticleById = (artId) => {
         return article
     })
 }
-      
-      
+            
 exports.selectAllArticles = () => {
     
     return db.query(`SELECT 
@@ -47,6 +46,21 @@ exports.selectAllCommentsByArtId = (artId) => {
     .then(({ rows }) => {
         const commentArray = rows
         return commentArray
+    })
+}
+
+exports.insertComment = (reqBody, artId) => {
+    const { username, body } = reqBody
+
+    let sqlStr = `INSERT INTO comments ( author, body, article_id ) VALUES ( $1, $2, $3 ) RETURNING *`
+
+    const valArray = [ username, body, artId ]
+
+    return db.query(sqlStr, valArray)
+    .then((table) => {
+        const comment = table.rows[0]
+        // console.log(comment)
+        return comment
     })
 }
 

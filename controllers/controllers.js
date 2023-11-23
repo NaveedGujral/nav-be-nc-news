@@ -1,4 +1,4 @@
-const { selectAllTopics, getJSONmodel, selectAllArticles, selectArticleById, selectAllCommentsByArtId  } = require('../models/models')
+const { selectAllTopics, getJSONmodel, selectAllArticles, selectArticleById, selectAllCommentsByArtId, insertComment  } = require('../models/models')
 
 
 exports.getAllTopics = (req, res, next) => {
@@ -37,6 +37,18 @@ exports.getAllCommentsByArtId = (req, res, next) => {
     selectAllCommentsByArtId(artId)
     .then((comments) => {
         res.status(200).send({ comments })
+    })
+    .catch((err) => {
+        next(err)
+      })
+}
+
+exports.postComment = (req, res, next) => {
+    const artId = req.params.article_id
+    Promise.all([selectArticleById(artId), insertComment(req.body, artId)])
+    .then((responses) => {
+        const comment = responses[1]
+        res.status(201).send({ comment: comment })
     })
     .catch((err) => {
         next(err)
