@@ -67,7 +67,7 @@ exports.insertComment = (reqBody, artId) => {
     const { username, body } = reqBody
     const reqKeys = Object.keys(reqBody)
 
-    if (!username || !body || reqKeys.length !== 2) {
+    if (!username || !body) {
         {
             return Promise.reject({
                 status: 400,
