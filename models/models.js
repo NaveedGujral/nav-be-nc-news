@@ -65,7 +65,6 @@ exports.selectAllCommentsByArtId = (artId) => {
 
 exports.insertComment = (reqBody, artId) => {
     const { username, body } = reqBody
-    const reqKeys = Object.keys(reqBody)
 
     if (!username || !body) {
         {

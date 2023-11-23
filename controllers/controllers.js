@@ -61,7 +61,6 @@ exports.postComment = (req, res, next) => {
     Promise.all([selectArticleById(artId), selectUserByUsername(username), insertComment(req.body, artId) ])
     .then((responses) => {
         const comment = responses[2]
-        // console.log(comment)
         res.status(201).send({ comment: comment })
     })
     .catch((err) => {
