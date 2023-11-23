@@ -47,8 +47,9 @@ exports.getPatchedArticleById = (req, res, next) => {
     const artId = req.params.article_id
     const newVote = req.body.inc_votes
 
-    updateArticleVotes(newVote, artId)
-    .then((article) => {
+    Promise.all([selectArticleById(artId), updateArticleVotes(newVote, artId)])
+    .then((responses) => {
+        const article = responses[1]
         res.status(200).send({article: article})
     })
     .catch((err) => {
@@ -60,3 +61,19 @@ exports.getJSONctrl = (req, res) => {
     const JSONobj = getJSONmodel()
     res.status(200).send( JSONobj )
 }
+/*
+exports.postComment = (req, res, next) => {
+    const artId = req.params.article_id
+    const username = req.body.username
+
+    Promise.all([selectArticleById(artId), selectUserByUsername(username), insertComment(req.body, artId) ])
+    .then((responses) => {
+        const comment = responses[2]
+        // console.log(comment)
+        res.status(201).send({ comment: comment })
+    })
+    .catch((err) => {
+        next(err)
+      })
+}
+*/
