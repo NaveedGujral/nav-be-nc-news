@@ -1,4 +1,4 @@
-const { selectAllTopics, getJSONmodel, selectAllArticles, selectArticleById, selectAllCommentsByArtId  } = require('../models/models')
+const { selectAllTopics, getJSONmodel, selectAllArticles, selectArticleById, selectAllCommentsByArtId, updateArticleVotes  } = require('../models/models')
 
 
 exports.getAllTopics = (req, res, next) => {
@@ -41,6 +41,19 @@ exports.getAllCommentsByArtId = (req, res, next) => {
     .catch((err) => {
         next(err)
       })
+}
+
+exports.getPatchedArticleById = (req, res, next) => {
+    const artId = req.params.article_id
+    // const newVote = req.body.inc_votes
+    console.log(req)
+    updateArticleVotes(newVote, artId)
+    .then((article) => {
+        res.status(200).send({ article: article })
+    })
+    .catch((err) => {
+        next(err)
+        })       
 }
 
 exports.getJSONctrl = (req, res) => {

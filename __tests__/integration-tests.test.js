@@ -138,13 +138,30 @@ describe('GET /api/articles/:article_id tests', () => {
     });
 });
 
-describe('PATCH /api/articles/:article_id', () => {
-    test('should respond with an object with the correct information', () => {
+describe.skip('PATCH /api/articles/:article_id', () => {
+    test('should respond with 200 and an object with the correct information', () => {
         const reqObj = {
-             inc_votes : 1 
+             inc_votes : 899 
         }
-
-        return
+        return request(app)
+        .patch("/api/articles/1")
+        .send(reqObj)
+        .expect(200)
+        .then((response) => {
+            expect(response.body.comment).toMatchObject(
+                {
+                    article: {
+                        article_id: 1,
+                        title: 'Living in the shadow of a great man',
+                        topic: 'mitch',
+                        author: 'butter_bridge',
+                        body: 'I find this existence challenging',
+                        created_at: '2020-07-09T20:11:00.000Z',
+                        votes: 999,
+                        article_img_url: 'https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700' 
+                }
+            })
+        })
     });
 });
 
@@ -157,4 +174,4 @@ describe('GET /api tests', () => {
                 expect(body).toEqual(endpointJSONfile)
         })
     });
-});
+})

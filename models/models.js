@@ -54,9 +54,15 @@ exports.updateArticleVotes = (newVote, artId) => {
     const valArr = [ newVote, artId ]
 
     return db.query(sqlStr, valArr)
-    .then((table) => {
-        const article = table.rows[0]
-        console.log("article ->", article)
+    .then(({ rows }) => {
+        const article = rows[0]
+        if (article === undefined) {
+            return Promise.reject({
+                status: 404,
+                msg: `article does not exist`
+            })
+        }
+        return article
     })
 }
 
