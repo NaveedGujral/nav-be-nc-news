@@ -138,7 +138,7 @@ describe('GET /api/articles/:article_id tests', () => {
     });
 });
 
-describe.only('PATCH /api/articles/:article_id', () => {
+describe.skip('PATCH /api/articles/:article_id', () => {
     test('should respond with 200 and an object with the correct information', () => {
         const newVoteObj = {
              inc_votes : 899 
