@@ -4,17 +4,14 @@ const { getAllTopics, getJSONctrl, getAllArticles, getArticleById,  getAllCommen
 const { psqlErrors, customErrors, serverErrors } = require("./errors.js");
 
 app.get("/api/topics", getAllTopics)
-
 app.get("/api/articles/:article_id/comments", getAllCommentsByArtId)
-
-
 app.get("/api", getJSONctrl)
 app.get("/api/articles", getAllArticles)
 app.get("/api/articles/:article_id", getArticleById)
 
-app.use(customErrors)
-app.use(psqlErrors)
-app.use(serverErrors)
+
+
+
 
 app.use(customErrors)
 app.use(psqlErrors)
