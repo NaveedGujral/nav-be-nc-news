@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express()
-const { getAllTopics, getJSONctrl, getAllArticles, getArticleById,  getAllCommentsByArtId, postComment  } = require('./controllers/controllers.js');
+const { getAllTopics, getJSONctrl, getAllArticles, getArticleById,  getAllCommentsByArtId, postComment, deleteComment  } = require('./controllers/controllers.js');
 const { psqlErrors, customErrors, serverErrors } = require("./errors.js");
 
 app.use(express.json())
@@ -13,6 +13,7 @@ app.get("/api/articles/:article_id", getArticleById)
 app.get("/api", getJSONctrl)
 
 app.post("/api/articles/:article_id/comments", postComment)
+app.delete("/api/comments/:comment_id", deleteComment)
 
 app.use(customErrors)
 app.use(psqlErrors)

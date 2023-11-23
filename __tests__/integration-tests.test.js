@@ -237,6 +237,47 @@ describe('POST /api/articles/:article_id/comments test', () => {
     });
 });
 
+describe.only('DELETE /api/comments/:comment_id tests', () => {
+    test('should respond with only 204 with valid comment_id. Comments table should have the relevant entry removed', () => {
+        request(app)
+        .get("/api/articles/9/comments")
+        .then(({ body }) => {
+            expect(body.comments[0].comment_id).toBe(1)     
+            expect(body.comments[1].comment_id).toBe(17)     
+            expect(body.comments).toHaveLength(2)     
+        })
+        return request(app) 
+        .delete("/api/comments/1")
+        .expect(204)
+        .then((response) => {
+            expect(response.body).toMatchObject({})
+            return request(app)
+            .get("/api/articles/9/comments")
+            .expect(200)
+            .then(({ body }) => {
+                expect(body.comments).toHaveLength(1)
+                expect(body.comments[0].comment_id).toBe(17)     
+            }) 
+        })
+    });
+    test('responds with 404 and error message "comment does not exist" when given a non-existent id', () => {
+        return request(app)
+        .delete('/api/comments/999')
+        .expect(404)
+        .then((response) => {
+        expect(response.body.msg).toBe('comment does not exist');
+      });
+    });
+    test('responds with 400 and error message "Bad Request" when given a invalid id', () => {
+        return request(app)
+        .delete('/api/comments/not-an-id')
+        .expect(400)
+        .then((response) => {
+        expect(response.body.msg).toBe('Bad Request');
+      });
+    });
+});
+
 describe('GET /api tests', () => {
         test('should return an parsed JSON object with the correct information', () => {
             return request(app)

@@ -1,4 +1,4 @@
-const { selectAllTopics, getJSONmodel, selectAllArticles, selectArticleById, selectAllCommentsByArtId, insertComment, selectUserByUsername  } = require('../models/models')
+const { selectAllTopics, getJSONmodel, selectAllArticles, selectArticleById, selectAllCommentsByArtId, insertComment, selectUserByUsername, removeComment, selectCommentById  } = require('../models/models')
 
 
 exports.getAllTopics = (req, res, next) => {
@@ -16,6 +16,17 @@ exports.getArticleById = (req, res, next) => {
     selectArticleById(artId)
     .then((article) => {
         res.status(200).send({ article: article })
+    })
+    .catch((err) => {
+        next(err)
+        })       
+}
+
+exports.getCommentById = (req, res, next) => {
+    const comment_id = req.params.comment_id
+    selectCommentById(comment_id)
+    .then((comment) => {
+        res.status(200).send({ comment: comment })
     })
     .catch((err) => {
         next(err)
@@ -66,6 +77,17 @@ exports.postComment = (req, res, next) => {
     .catch((err) => {
         next(err)
       })
+}
+
+exports.deleteComment = (req, res, next) => {
+    const comment_id = req.params.comment_id
+    Promise.all([selectCommentById(comment_id), removeComment(comment_id)])
+    .then(() => {
+        res.status(204).send()
+    })
+    .catch((err) => {
+        next(err)
+    })
 }
 
 exports.getJSONctrl = (req, res) => {
