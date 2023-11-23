@@ -161,6 +161,20 @@ describe('POST /api/articles/:article_id/comments test', () => {
             )
         })
     });
+    test('should respond a 404 and when given a username that does not exist ', () => {
+        const newComment =  {
+            username:"iLoveChicken",
+            body:"I'm allergic to chicken"
+          }
+
+        return request(app)
+        .post("/api/articles/1/comments")
+        .send(newComment)
+        .expect(404)
+        .then(({ body }) => {
+            expect(body.msg).toBe("user does not exist")
+        })
+    });
     test('should respond with a 404 when given a valid article id that does not exist', () => {
         const newComment =  {
             username:"lurker",
@@ -178,6 +192,33 @@ describe('POST /api/articles/:article_id/comments test', () => {
         const newComment =  {
             username:"lurker",
             body:"I'm allergic to chicken"
+          } 
+        return request(app)
+        .post("/api/articles/not-an-id/comments")
+        .send(newComment)
+        .expect(400)
+        .then(({ body }) => {
+            expect(body.msg).toBe("Bad Request")
+        })
+    });
+    test('should respond with a 400 when given a request body with a missing "body" property', () => {
+        const newComment =  {
+            username:"lurker"
+          } 
+        return request(app)
+        .post("/api/articles/not-an-id/comments")
+        .send(newComment)
+        .expect(400)
+        .then(({ body }) => {
+            expect(body.msg).toBe("Bad Request")
+        })
+    });
+    test('should respond with a 400 when given a request body with additional properties', () => {
+        const newComment =  {
+            username:"lurker",
+            body:"I'm allergic to chicken",
+            location: "Manchester",
+            job: "bin man"
           } 
         return request(app)
         .post("/api/articles/not-an-id/comments")
