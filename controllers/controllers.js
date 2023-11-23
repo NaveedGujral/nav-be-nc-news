@@ -46,7 +46,7 @@ exports.getAllCommentsByArtId = (req, res, next) => {
 exports.getPatchedArticleById = (req, res, next) => {
     const artId = req.params.article_id
     // const newVote = req.body.inc_votes
-    console.log(req)
+    console.log(req.body)
     updateArticleVotes(newVote, artId)
     .then((article) => {
         res.status(200).send({ article: article })
