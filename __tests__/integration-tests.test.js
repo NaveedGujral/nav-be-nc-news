@@ -213,8 +213,20 @@ describe('PATCH /api/articles/:article_id', () => {
             expect(body.msg).toBe("Bad Request")
         })
     });
-    test('should respond with a 400 when passed an empty object', () => {
+    test('should respond with a 400 when the request body is missing', () => {
         const newVoteObj = {}
+        return request(app)
+        .patch("/api/articles/1")
+        .send(newVoteObj)
+        .expect(400)
+        .then(({ body }) => {
+            expect(body.msg).toBe("Bad Request")
+        })
+    });
+    test('should respond with a 400 when the request body is has an invalid data-type', () => {
+        const newVoteObj = {
+            inc_votes : "fish" 
+        }
         return request(app)
         .patch("/api/articles/1")
         .send(newVoteObj)
