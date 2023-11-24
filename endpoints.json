@@ -11,7 +11,7 @@
   },
   "GET /api/articles": {
     "description": "serves an array of all articles",
-    "queries": ["author", "topic", "sort_by", "order"],
+    "queries": [],
     "exampleResponse": {
       "articles": [
         {
@@ -24,6 +24,23 @@
           "article_img_url":
           "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
           "comment_count": 6
+        }
+      ]
+    }
+  },
+  "GET /api/articles?topic=your-query": {
+    "description": "serves an array of all articles filter by topic",
+    "queries": ["topic"],
+    "exampleResponse": {
+      "articles": [
+        {
+          "title": "UNCOVERED: catspiracy to bring down democracy",
+          "topic": "cats",
+          "author": "rogersop",
+          "body": "Bastet walks amongst us, and the cats are taking arms!",
+          "created_at": 1596464040000,
+          "article_img_url":
+            "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700"
         }
       ]
     }
