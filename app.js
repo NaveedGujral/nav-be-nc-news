@@ -16,6 +16,7 @@ app.get("/api", getJSONctrl)
 app.patch("/api/articles/:article_id", getPatchedArticleById)
 
 app.post("/api/articles/:article_id/comments", postComment)
+
 app.delete("/api/comments/:comment_id", deleteComment)
 
 app.use(customErrors)

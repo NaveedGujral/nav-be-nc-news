@@ -232,6 +232,7 @@ describe('POST /api/articles/:article_id/comments test', () => {
         .send(newComment)
     });
 })
+
   describe('PATCH /api/articles/:article_id', () => {
     test('should respond with 200 and an object with the correct information', () => {
         const newVoteObj = {

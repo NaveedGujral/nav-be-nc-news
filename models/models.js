@@ -128,7 +128,3 @@ exports.removeComment = (comment_id) => {
 exports.getJSONmodel = () => {
     return endpointJSONfile
 }
-
-exports.getJSONmodel = () => {
-    return endpointJSONfile
-}
