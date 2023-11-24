@@ -222,20 +222,111 @@ describe('POST /api/articles/:article_id/comments test', () => {
         .then(({ body }) => {
             expect(body.msg).toBe("Bad Request")
         })
-    });
-    test('should respond with a 400 when given a request body with a missing "body" property', () => {
+    })
+   test('should respond with a 400 when given a request body with a missing "body" property', () => {
         const newComment =  {
             username:"lurker"
           } 
         return request(app)
         .post("/api/articles/1/comments")
         .send(newComment)
+    });
+})
+  describe('PATCH /api/articles/:article_id', () => {
+    test('should respond with 200 and an object with the correct information', () => {
+        const newVoteObj = {
+             inc_votes : 899 
+        }
+        return request(app)
+        .patch("/api/articles/1")
+        .send(newVoteObj)
+        .expect(200)
+        .then((response) => {
+            expect(response.body).toMatchObject(
+                {
+                    article: {
+                        article_id: 1,
+                        title: 'Living in the shadow of a great man',
+                        topic: 'mitch',
+                        author: 'butter_bridge',
+                        body: 'I find this existence challenging',
+                        created_at: '2020-07-09T20:11:00.000Z',
+                        votes: 999,
+                        article_img_url: 'https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700' 
+                }
+            })
+        })
+    });
+    test('should respond with 200 and an object with the correct information when passed an object with additional propeties', () => {
+        const newVoteObj = {
+             inc_votes : 899,
+             date: 210393,
+             location: "manchester" 
+        }
+        return request(app)
+        .patch("/api/articles/1")
+        .send(newVoteObj)
+        .expect(200)
+        .then((response) => {
+            expect(response.body).toMatchObject(
+                {
+                    article: {
+                        article_id: 1,
+                        title: 'Living in the shadow of a great man',
+                        topic: 'mitch',
+                        author: 'butter_bridge',
+                        body: 'I find this existence challenging',
+                        created_at: '2020-07-09T20:11:00.000Z',
+                        votes: 999,
+                        article_img_url: 'https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700' 
+                }
+            })
+        })
+    });
+    test('should respond 404 and the message "article does not exist" and when given a valid article_id that does not exist ', () => {
+        const newVoteObj = {
+            inc_votes : 899 
+       }
+       return request(app)
+        .patch("/api/articles/999")
+        .send(newVoteObj)
+        .expect(404)
+        .then(({ body }) => {
+            expect(body.msg).toBe("article does not exist")
+        })
+    });
+    test('should respond with a 400 when given a invalid article id', () => {
+        const newVoteObj = {
+            inc_votes : 899 
+       }
+        return request(app)
+        .patch("/api/articles/not-an-id")
+        .send(newVoteObj)
         .expect(400)
         .then(({ body }) => {
             expect(body.msg).toBe("Bad Request")
         })
     });
-});
+    test('should respond with a 400 when the request body is missing', () => {
+        const newVoteObj = {}
+        return request(app)
+        .patch("/api/articles/1")
+        .send(newVoteObj)
+    })
+    test('should respond with a 400 when the request body is has an invalid data-type', () => {
+        const newVoteObj = {
+            inc_votes : "fish" 
+        }
+        return request(app)
+        .patch("/api/articles/1")
+        .send(newVoteObj)
+
+        .expect(400)
+        .then(({ body }) => {
+            expect(body.msg).toBe("Bad Request")
+        })
+    });
+})
 
 describe('DELETE /api/comments/:comment_id tests', () => {
     test('should respond with only 204 with valid comment_id. Comments table should have the relevant entry removed', () => {
@@ -286,4 +377,4 @@ describe('GET /api tests', () => {
                 expect(body).toEqual(endpointJSONfile)
         })
     });
-});
+})

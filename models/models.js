@@ -49,7 +49,7 @@ exports.selectUserByUsername = (username) => {
         return user
     })
 }
-            
+           
 exports.selectAllArticles = () => {
     
     return db.query(`SELECT 
@@ -74,6 +74,25 @@ exports.selectAllCommentsByArtId = (artId) => {
     .then(({ rows }) => {
         const commentArray = rows
         return commentArray
+    })
+}
+
+exports.updateArticleVotes = (newVote, artId) => {
+    const sqlStr = `UPDATE articles SET votes = votes + $1 WHERE article_id = $2 RETURNING *`
+    const valArr = [ newVote, artId ]
+
+    return db.query(sqlStr, valArr)
+    .then(({ rows }) => {
+        const article = rows[0]
+        
+        if (article === undefined) {
+            return Promise.reject({
+                status: 404,
+                msg: `article does not exist`
+            })
+        }
+
+        return article
     })
 }
 
@@ -110,3 +129,6 @@ exports.getJSONmodel = () => {
     return endpointJSONfile
 }
 
+exports.getJSONmodel = () => {
+    return endpointJSONfile
+}

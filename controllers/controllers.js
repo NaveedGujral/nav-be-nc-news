@@ -1,5 +1,4 @@
-const { selectAllTopics, getJSONmodel, selectAllArticles, selectArticleById, selectAllCommentsByArtId, insertComment, selectUserByUsername, removeComment, selectCommentById  } = require('../models/models')
-
+const { selectAllTopics, getJSONmodel, selectAllArticles, selectArticleById, selectAllCommentsByArtId, insertComment, selectUserByUsername, updateArticleVotes, removeComment, selectCommentById   } = require('../models/models')
 
 exports.getAllTopics = (req, res, next) => {
     selectAllTopics()
@@ -65,6 +64,20 @@ exports.getAllCommentsByArtId = (req, res, next) => {
       })
 }
 
+exports.getPatchedArticleById = (req, res, next) => {
+    const artId = +req.params.article_id
+    const newVote = req.body.inc_votes
+
+    Promise.all([ updateArticleVotes(newVote, artId),selectArticleById(artId)])
+    .then((responses) => {
+        const article = responses[0]
+        res.status(200).send({article: article})
+    })
+    .catch((err) => {
+        next(err)
+        })       
+    }
+    
 exports.postComment = (req, res, next) => {
     const artId = req.params.article_id
     const username = req.body.username

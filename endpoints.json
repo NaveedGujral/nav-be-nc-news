@@ -69,6 +69,27 @@
       }
     }
   },
+
+  "PATCH /api/articles/:article_id": {
+    "description":"updates the votes property in the article object based on the id given and votes specified in the request object",
+    "queries": [],
+    "exampleRequest": {
+      "inc_votes": 899
+    },
+    "exampleResponse": {
+      "article": {
+          "author": "butter_bridge",
+          "title": "Living in the shadow of a great man",
+          "article_id": "1",
+          "body": "I find this existence challenging",
+          "topic": "mitch",
+          "created_at": 1594329060000,
+          "votes": 999,
+          "article_img_url":
+            "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700"
+      }
+    }
+  },
   "POST /api/articles/:article_id/comments": {
     "description":"adds a comment for an article, request body accepts an object (comment) and responds with the posted comment after insertion into the comments table",
     "queries": [],
