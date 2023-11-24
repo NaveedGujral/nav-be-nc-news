@@ -22,6 +22,20 @@ exports.selectArticleById = (artId) => {
     })
 }
 
+exports.selectCommentById = (comment_id) => {
+    return db.query(`SELECT * FROM comments WHERE comment_id = $1`, [comment_id])
+    .then(({ rows }) => {
+        const comment = rows[0]
+        if (comment === undefined) {
+            return Promise.reject({
+                status: 404,
+                msg: `comment does not exist`
+            })
+        }
+        return comment
+    })
+}
+
 exports.selectUserByUsername = (username) => {
     return db.query(`SELECT * FROM users WHERE username = $1`, [username])
     .then(({ rows }) => {
@@ -94,7 +108,7 @@ exports.insertComment = (reqBody, artId) => {
         }
     }
 
-    let sqlStr = `INSERT INTO comments ( author, body, article_id ) VALUES ( $1, $2, $3 ) RETURNING *`
+    const sqlStr = `INSERT INTO comments ( author, body, article_id ) VALUES ( $1, $2, $3 ) RETURNING *`
 
     const valArray = [ username, body, artId ]
 
@@ -103,6 +117,12 @@ exports.insertComment = (reqBody, artId) => {
         const comment = table.rows[0]
         return comment
     })
+}
+
+exports.removeComment = (comment_id) => {
+    const sqlStr = `DELETE FROM comments WHERE comment_id = $1`
+    const valArray = [ comment_id ]
+    return db.query(sqlStr, valArray)
 }
 
 exports.getJSONmodel = () => {
