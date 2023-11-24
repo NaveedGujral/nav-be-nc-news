@@ -144,14 +144,15 @@ describe('GET /api/articles/:article_id tests', () => {
                     body: 'I find this existence challenging',
                     created_at: '2020-07-09T20:11:00.000Z',
                     votes: 100,
-                    article_img_url: 'https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700'
+                    article_img_url: 'https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700',
+                    comment_count: 11
                 }
             })
         })
     });
     test('should respond with a error status of 404 when passed a non-existent id', () => {
         return request(app)
-        .get("/api/articles/140")
+        .get("/api/articles/999")
         .expect(404)
         .then(({ body }) => {
             expect(body.msg).toBe("article does not exist")
