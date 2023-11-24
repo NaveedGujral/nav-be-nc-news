@@ -1,4 +1,4 @@
-const { selectAllTopics, getJSONmodel, selectAllArticles, selectArticleById, selectAllCommentsByArtId, insertComment, selectUserByUsername, updateArticleVotes, removeComment, selectCommentById   } = require('../models/models')
+const { selectAllTopics, getJSONmodel, selectAllArticles, selectArticleById, selectAllCommentsByArtId, insertComment, selectUserByUsername, updateArticleVotes, removeComment, selectCommentById, selectAllUsers   } = require('../models/models')
 
 exports.getAllTopics = (req, res, next) => {
     selectAllTopics()
@@ -52,6 +52,16 @@ exports.getAllArticles = (req, res, next) => {
         next(err)
     }) 
 }
+
+exports.getAllUsers = (req, res, next) => {
+    selectAllUsers()
+    .then((users) => {
+        res.status(200).send({ users })
+    })
+    .catch((err) => {
+        next(err)
+    }) 
+} 
 
 exports.getAllCommentsByArtId = (req, res, next) => {
     const artId = req.params.article_id

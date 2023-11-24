@@ -36,6 +36,14 @@ exports.selectCommentById = (comment_id) => {
     })
 }
 
+exports.selectAllUsers = () => {
+    return db.query(`SELECT * FROM users`)
+    .then(({ rows }) => {
+        const users = rows
+        return users
+    })
+}
+
 exports.selectUserByUsername = (username) => {
     return db.query(`SELECT * FROM users WHERE username = $1`, [username])
     .then(({ rows }) => {

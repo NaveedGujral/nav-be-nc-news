@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express()
 
-const { getAllTopics, getJSONctrl, getAllArticles, getArticleById,  getAllCommentsByArtId, postComment, getPatchedArticleById,  deleteComment  } = require('./controllers/controllers.js');
+const { getAllTopics, getJSONctrl, getAllArticles, getArticleById,  getAllCommentsByArtId, postComment, getPatchedArticleById,  deleteComment, getAllUsers  } = require('./controllers/controllers.js');
 const { psqlErrors, customErrors, serverErrors } = require("./errors.js");
 
 app.use(express.json())
@@ -12,6 +12,7 @@ app.get("/api", getJSONctrl)
 app.get("/api/articles", getAllArticles)
 app.get("/api/articles/:article_id", getArticleById)
 app.get("/api", getJSONctrl)
+app.get("/api/users", getAllUsers)
 
 app.patch("/api/articles/:article_id", getPatchedArticleById)
 
