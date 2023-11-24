@@ -80,6 +80,8 @@ exports.updateArticleVotes = (newVote, artId) => {
 
         return article
     })
+}
+
 exports.insertComment = (reqBody, artId) => {
     const { username, body } = reqBody
 

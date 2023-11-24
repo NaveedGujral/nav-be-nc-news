@@ -65,7 +65,8 @@ exports.getPatchedArticleById = (req, res, next) => {
     .catch((err) => {
         next(err)
         })       
-=======
+    }
+    
 exports.postComment = (req, res, next) => {
     const artId = req.params.article_id
     const username = req.body.username

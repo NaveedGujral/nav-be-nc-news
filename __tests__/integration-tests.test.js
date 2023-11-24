@@ -222,6 +222,7 @@ describe('POST /api/articles/:article_id/comments test', () => {
         .then(({ body }) => {
             expect(body.msg).toBe("Bad Request")
         })
+    })
    test('should respond with a 400 when given a request body with a missing "body" property', () => {
         const newComment =  {
             username:"lurker"
@@ -230,7 +231,7 @@ describe('POST /api/articles/:article_id/comments test', () => {
         .post("/api/articles/1/comments")
         .send(newComment)
     });
-  
+})
   describe('PATCH /api/articles/:article_id', () => {
     test('should respond with 200 and an object with the correct information', () => {
         const newVoteObj = {
@@ -311,7 +312,7 @@ describe('POST /api/articles/:article_id/comments test', () => {
         return request(app)
         .patch("/api/articles/1")
         .send(newVoteObj)
-
+    })
     test('should respond with a 400 when the request body is has an invalid data-type', () => {
         const newVoteObj = {
             inc_votes : "fish" 
@@ -325,6 +326,7 @@ describe('POST /api/articles/:article_id/comments test', () => {
             expect(body.msg).toBe("Bad Request")
         })
     });
+})
 
 describe('GET /api tests', () => {
         test('should return an parsed JSON object with the correct information', () => {
