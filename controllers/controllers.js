@@ -12,8 +12,9 @@ exports.getAllTopics = (req, res, next) => {
     
 exports.getArticleById = (req, res, next) => {
     const artId = req.params.article_id
-    selectArticleById(artId)
-    .then((article) => {
+    Promise.all([selectArticleById(artId)])
+    .then((responses) => {
+        const article = responses[0]
         res.status(200).send({ article: article })
     })
     .catch((err) => {
