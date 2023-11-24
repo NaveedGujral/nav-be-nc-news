@@ -69,6 +69,7 @@
       }
     }
   },
+
   "PATCH /api/articles/:article_id": {
     "description":"updates the votes property in the article object based on the id given and votes specified in the request object",
     "queries": [],
@@ -87,6 +88,19 @@
           "article_img_url":
             "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700"
       }
+  "POST /api/articles/:article_id/comments": {
+    "description":"adds a comment for an article, request body accepts an object (comment) and responds with the posted comment after insertion into the comments table",
+    "queries": [],
+    "exampleRequest": {
+      "username":"Ilikechicken",
+      "body":"I'm allergic to chicken"
+    },
+    "exampleResponse": {
+      "body":"I'm allergic to chicken",
+      "votes": 0,
+      "author":"Ilikechicken",
+      "article_id": 3,
+      "created_at":1582459260000
     }
   }
 }

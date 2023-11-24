@@ -21,6 +21,20 @@ exports.selectArticleById = (artId) => {
         return article
     })
 }
+
+exports.selectUserByUsername = (username) => {
+    return db.query(`SELECT * FROM users WHERE username = $1`, [username])
+    .then(({ rows }) => {
+        const user = rows[0]
+        if (user === undefined) {
+            return Promise.reject({
+                status: 404,
+                msg: `user does not exist`
+            })
+        }
+        return user
+    })
+}
            
 exports.selectAllArticles = () => {
     
@@ -66,6 +80,31 @@ exports.updateArticleVotes = (newVote, artId) => {
 
         return article
     })
+exports.insertComment = (reqBody, artId) => {
+    const { username, body } = reqBody
+
+    if (!username || !body) {
+        {
+            return Promise.reject({
+                status: 400,
+                msg: `Bad Request`
+            })
+        }
+    }
+
+    let sqlStr = `INSERT INTO comments ( author, body, article_id ) VALUES ( $1, $2, $3 ) RETURNING *`
+
+    const valArray = [ username, body, artId ]
+
+    return db.query(sqlStr, valArray)
+    .then((table) => {
+        const comment = table.rows[0]
+        return comment
+    })
+}
+
+exports.getJSONmodel = () => {
+    return endpointJSONfile
 }
 
 exports.getJSONmodel = () => {
