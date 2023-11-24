@@ -87,6 +87,14 @@ exports.selectAllArticles = (topic) => {
         articles.forEach((article) => {
             article.comment_count = +article.comment_count
         })
+
+        if (articles.length === 0) {
+            return Promise.reject({
+                status: 404,
+                msg: `topic does not exist`
+            })
+        }
+
         return articles
     })
 }

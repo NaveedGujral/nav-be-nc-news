@@ -76,10 +76,9 @@ describe("GET /api/articles tests", () => {
     test('responds with empty array of objects when queried a topic that does not exist. The array has the correct length and the accompanying code should be status 200', () => {
         return request(app)
         .get("/api/articles?topic=dogs")
-        .expect(200)
-        .then(( { body }) => {
-            expect(body.articles).toHaveLength(0)
-            expect(body.msg).toBe("there are no articles with this topic")
+        .expect(404)
+        .then(({ body }) => {
+            expect(body.msg).toBe("topic does not exist")
         })
     })
 });

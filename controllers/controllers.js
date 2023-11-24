@@ -47,10 +47,6 @@ exports.getAllArticles = (req, res, next) => {
     const { topic } = req.query
     selectAllArticles(topic)
     .then((articles) => {
-        if (articles.length === 0) {
-            res.status(200).send({ articles, msg: "there are no articles with this topic" })
-        }
-        
         res.status(200).send({ articles })
     })
     .catch((err) => {
