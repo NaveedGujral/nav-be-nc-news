@@ -30,8 +30,8 @@ describe("GET /api/topics tests", () => {
     })
 });
 
-describe("GET /api/articles tests", () => {
-    test('responds with array of objects with the correct keys. The array has the correct length and the accompanying code should be status 200', () => {
+describe.only("GET /api/articles tests", () => {
+    test.only('responds with array of objects with the correct keys. The array has the correct length and the accompanying code should be status 200', () => {
         return request(app)
         .get("/api/articles")
         .expect(200)

@@ -66,6 +66,68 @@ exports.selectUserByUsername = (username) => {
     })
 }
            
+exports.selectAllArticles = (topic, sort_by, order) => {
+    let dbQueryStr = `SELECT 
+    articles.author, title, articles.article_id, topic, articles.created_at, articles.votes, articles.article_img_url, COUNT(comment_id) AS comment_count 
+    FROM articles 
+    LEFT JOIN comments ON comments.article_id = articles.article_id `
+
+    let valArr = []
+    
+    
+    if(topic) {
+        dbQueryStr = dbQueryStr + `WHERE topic = $3 `,
+        valArr.push(topic)
+    }
+
+    
+    if (!sort_by) {
+        // dbQueryStr = dbQueryStr + `GROUP BY articles.article_id ORDER BY $1 `
+        dbQueryStr = dbQueryStr + `GROUP BY articles.article_id ORDER BY articles.created_at `
+
+        // valArr.unshift(`articles.created_at `)
+    }
+    else {
+        dbQueryStr = dbQueryStr + `GROUP BY articles.article_id ORDER BY ${sort_by} `
+        // dbQueryStr = dbQueryStr + `GROUP BY articles.article_id ORDER BY ${sort_by} `
+    }
+    
+    if (!order) {
+        dbQueryStr = dbQueryStr + `DESC;`
+      }
+    else {
+        dbQueryStr = dbQueryStr + `${order};`
+    }
+    
+      // console.log(sort_by)
+    // console.log(order)
+    
+    // console.log("valArr -> ", valArr)
+    
+    // // // dbQueryStr = dbQueryStr + `GROUP BY articles.article_id ORDER BY $1 $2;`
+    
+    // console.log('dbQueryStr -> ', dbQueryStr)
+
+    return db.query(dbQueryStr, valArr)
+    .then(({ rows }) => {
+        const articles = rows
+        // console.log(articles)
+        articles.forEach((article) => {
+            article.comment_count = +article.comment_count
+        })
+
+        if (articles.length === 0) {
+            return Promise.reject({
+                status: 404,
+                msg: `topic does not exist`
+            })
+        }
+
+        return articles
+    })
+}
+
+/*
 exports.selectAllArticles = (topic) => {
     let dbQueryStr = `SELECT 
     articles.author, title, articles.article_id, topic, articles.created_at, articles.votes, articles.article_img_url, COUNT(comment_id) AS comment_count 
@@ -106,6 +168,7 @@ exports.selectAllArticles = (topic) => {
         return articles
     })
 }
+*/
 
 exports.selectAllCommentsByArtId = (artId) => {
     return db.query(`SELECT comment_id, votes, created_at, author, body, article_id FROM comments WHERE article_id = $1 ORDER BY created_at DESC;`, [artId])
