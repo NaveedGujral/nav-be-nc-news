@@ -233,7 +233,7 @@ describe('POST /api/articles/:article_id/comments test', () => {
     });
 })
 
-  describe('PATCH /api/articles/:article_id', () => {
+describe('PATCH /api/articles/:article_id', () => {
     test('should respond with 200 and an object with the correct information', () => {
         const newVoteObj = {
              inc_votes : 899 
@@ -378,4 +378,22 @@ describe('GET /api tests', () => {
                 expect(body).toEqual(endpointJSONfile)
         })
     });
+})
+
+describe('GET /api/users tests', () => {
+    test('responds with array of objects with the correct keys. The array has the correct length and the accompanying code should be status 200', () => {
+        return request(app)
+        .get("/api/users")
+        .expect(200)
+        .then(( { body }) => {
+            expect(body.users).toHaveLength(4)
+            body.users.forEach((user) => {
+                expect(user).toMatchObject({
+                    username: expect.any(String),
+                    name: expect.any(String),
+                    avatar_url: expect.any(String)
+                })               
+            })
+        })
+    })
 })
