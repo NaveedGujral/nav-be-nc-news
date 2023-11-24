@@ -104,7 +104,6 @@ exports.removeComment = (comment_id) => {
     const sqlStr = `DELETE FROM comments WHERE comment_id = $1`
     const valArray = [ comment_id ]
     return db.query(sqlStr, valArray)
-    .then(() => {})
 }
 
 exports.getJSONmodel = () => {

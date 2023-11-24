@@ -249,8 +249,7 @@ describe('DELETE /api/comments/:comment_id tests', () => {
         return request(app) 
         .delete("/api/comments/1")
         .expect(204)
-        .then((response) => {
-            expect(response.body).toMatchObject({})
+        .then(() => {
             return request(app)
             .get("/api/articles/9/comments")
             .expect(200)
